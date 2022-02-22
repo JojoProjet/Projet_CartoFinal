@@ -28,6 +28,8 @@ const RightComposant = ({state}) => {
 
     const [modalShow, setModalShow] = React.useState(false);
 
+    const [dataStart, setDataStart] = useState([])
+    const [dataArrival, setDataArrival] = useState([])
 
     useEffect( () => {
         let objName = []
@@ -46,12 +48,26 @@ const RightComposant = ({state}) => {
     }, [])
 
     const handleClickModalDestination = () => {
-        setModalShow(true)
+        if(state.start && state.arrival) {
+            setModalShow(true)
+            state.dataAeroport.filter( (val) => {
+                if(val.name.toLowerCase().includes(state.start.toLowerCase()))
+                  setDataStart(val)
+                else if(val.name.toLowerCase().includes(state.arrival.toLowerCase())) {
+                  setDataArrival(val)
+                }
+            })
+        }
     }
 
     const onHideClose = () => {
         setModalShow(false)
-        state.handleCardClick(state.start)
+        state.handleCardClick(dataStart)
+        let newPath = [
+            {lat: parseFloat(dataStart.lat), lng: parseFloat(dataStart.lon), slide: "RIGHT_ROUND"},
+            {lat: parseFloat(dataArrival.lat), lng: parseFloat(dataArrival.lon)},
+        ]
+        state.setPaths([...state.paths, newPath])
     }
 
     return (
@@ -59,19 +75,21 @@ const RightComposant = ({state}) => {
 
             <Box mb={2}>
                 <FormControlLabel
-                value="top"
-                control={<Switch color="primary" />}
-                label="Top"
+                value="3D"
+                control={<Switch onChange={() => state.setActive(!state.active)} color="primary" />}
+                label="3D"
                 labelPlacement="top"
                 />
 
                 <CustomAutoComplete data={{aeroport: dataName}} state={{value: state.start, setValue: state.setStart}} label={"Start destination"} />
                 <CustomAutoComplete data={{aeroport: dataName}} state={{value: state.arrival, setValue: state.setArrival}} label={"Arrival destination"} />
                 
-                <Button style={{padding: 10, marginTop: 10, width: '80%'}} color="success" variant="contained" onClick={handleClickModalDestination}>Contained</Button>
+                <Button style={{padding: 10, marginTop: 10, width: '80%'}} color="success" variant="contained" onClick={handleClickModalDestination}>Voyager</Button>
             {
                 <ModalContent  
                     state={state}
+                    dataStart={dataStart}
+                    dataArrival={dataArrival}
                     show={modalShow}
                     onHide={onHideClose}
                 />
@@ -79,8 +97,7 @@ const RightComposant = ({state}) => {
 
             </Box>
 
-            <Divider variant="fullWidth" />
-
+            <Divider variant="fullWidth" /> 
            
             <Box component="div" sx={{height: '70vh'}}>
 

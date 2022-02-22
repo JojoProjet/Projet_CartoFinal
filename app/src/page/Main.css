@@ -4,3 +4,7 @@
     border-radius: 15px;
     box-shadow: 6px 6px 6px black inset;
 }
+
+.Globe, .scene-container, .Globe > canvas{
+    width: 100%
+}

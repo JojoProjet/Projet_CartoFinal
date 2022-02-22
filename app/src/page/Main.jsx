@@ -8,8 +8,11 @@ import aeroport from '../data/aeroport.json'
 
 import './Main.css'
 import { height } from '@mui/system';
+import DThree from '../components/Three/DThree';
 
 const Main = () => {
+
+    const [active, setActive] = useState(false)
 
     const [searchTerm,setSearchTerm] = useState('')
     const [dataAeroport, setDataAeroport] = useState(aeroport)
@@ -18,11 +21,17 @@ const Main = () => {
     const [start, setStart] = useState([])
     const [arrival, setArrival] = useState([])
 
+    const [paths, setPaths] = useState([])
+
     const handleCardClick = (item) => {
         setCardItem(item)
     }
 
     const state = {
+        active: active,
+        setActive: setActive,
+        paths: paths,
+        setPaths: setPaths,
         dataAeroport: dataAeroport,
         cardItem: cardItem,
         handleCardClick: handleCardClick,
@@ -39,6 +48,10 @@ const Main = () => {
             setArrival("")
         }
     }, [start])
+
+    useEffect( () => {
+        console.log(paths)
+    }, [paths])
 
     useEffect( () => {
         if(arrival === start) {
@@ -62,10 +75,14 @@ const Main = () => {
             <Box component="div" sx={{ width: '29%' }}>
                 <RightComposant state={state}/>
             </Box>
-            <Box component="div" sx={{ width: '69%', margin: 'auto' }}>
-                <MapLeaflet 
-                    state={state} 
-                />
+            <Box component="div" sx={{ maxWidth: '69%', width: '69%', margin: 'auto' }}>
+                {
+                    !active ?
+                    <MapLeaflet 
+                        state={state} 
+                    /> :
+                    <DThree />
+                }
             </Box>
         </Box>
     )

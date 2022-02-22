@@ -32,7 +32,7 @@ const Map = ( { state } ) => {
     useEffect(() => {
         if (!state.cardItem || !map) return;
         const { lat, lon } = state.cardItem;
-        map.flyTo([lat, lon]);
+        map.flyTo( [lat, lon]);
     }, [state.cardItem]);
 
     return (
@@ -44,7 +44,7 @@ const Map = ( { state } ) => {
             />
             <CreateMarker state={state} icon={customMarkerAvion} iconUrl={avion} />
             {
-                map !== null ? <LeafletBezier map={map} /> : <></>
+                map !== null ? <LeafletBezier map={map} paths={state.paths} /> : <></>
             }
 
         </MapContainer>

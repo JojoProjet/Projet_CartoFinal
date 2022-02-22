@@ -1,8 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import haversine from 'haversine-distance'
 
-function ModalContent(props, { state }) {
+function ModalContent(props) {
+
+    let state = props.state
+    let dataStart = props.dataStart
+    let dataArrival = props.dataArrival
+
+    let km = Math.floor(haversine( {lat: dataStart.lat, lng: dataStart.lon}, {lat: dataArrival.lat, lng: dataArrival.lon}) / 1000)
+
     return (
       <Modal
         {...props}
@@ -12,19 +20,20 @@ function ModalContent(props, { state }) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-             Resume
+             Your voyageee !
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Centered Modal</h4>
+          <h4>Resume</h4>
           <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
+          Depart : {dataStart.name}, {dataStart.country}<br/>
+          Arrived : {dataArrival.name}, {dataArrival.country}<br/>
+          Distance : {km} Km<br/>
+          Durée du voyage : {parseInt(km/600) === 0 ? "< 1" : parseInt(km/600)} heures
           </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
+          <Button onClick={props.onHide}>Voyage !</Button>
         </Modal.Footer>
       </Modal>
     );

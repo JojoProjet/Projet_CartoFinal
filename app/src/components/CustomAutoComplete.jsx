@@ -9,7 +9,7 @@ import { Autocomplete } from "@material-ui/lab";
 import { VariableSizeList } from "react-window";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from '@mui/material/Box';
-import train from '../assets/train.png'
+import train from '../assets/avion.png'
 
 const CustomAutoComplete = ({ data, state, label }) => {
   
@@ -22,7 +22,7 @@ const CustomAutoComplete = ({ data, state, label }) => {
           <Box sx={{ '& > img': { mr: 2, flexShrink: 0 } }}>
               <img
                   loading="lazy"
-                  width="20"
+                  width="40"
                   src={train}
                   alt=""
               />
