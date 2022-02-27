@@ -2,7 +2,7 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://jojogit01.github.io/proj-carto_avinisme",
+  "homepage": "http://jojogit01.github.io/proj-carto_avinisme",
   "dependencies": {
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
